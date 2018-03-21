@@ -12,10 +12,12 @@ services:
     links:
       - postgresql
       - gearmand
+    networks:
+      - db_network
   postgresql:
     image: mkurnikov/postgresql-9.4
     volumes:
-      - '/home/eduard/Project/work/postgresql:/var/lib/postgresql/data'
+      - '/home/eduard/Project/postgres_data:/var/lib/postgresql/data'
     environment:
       - POSTGRES_PASSWORD=123qwe
   gearmand:
@@ -28,3 +30,5 @@ services:
     image: romeoz/docker-sphinxsearch
     links:
       - postgresql
+networks:
+  db_network: null
