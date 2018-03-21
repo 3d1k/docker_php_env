@@ -1,0 +1,30 @@
+version: '2'
+services:
+  php-apache-dev:
+    build: .
+    hostname: vb
+    ports:
+      - '7888:80'
+      - '32770:3333'
+    environment: []
+    volumes:
+      - '/home/eduard/Project/storage:/app'
+    links:
+      - postgresql
+      - gearmand
+  postgresql:
+    image: mkurnikov/postgresql-9.4
+    volumes:
+      - '/home/eduard/Project/work/postgresql:/var/lib/postgresql/data'
+    environment:
+      - POSTGRES_PASSWORD=123qwe
+  gearmand:
+    image: artefactual/gearmand
+  ubuntu-gearman-worker-php:
+    image: lysender/ubuntu-gearman-worker-php
+    links:
+      - gearmand
+  sphinx:
+    image: romeoz/docker-sphinxsearch
+    links:
+      - postgresql
