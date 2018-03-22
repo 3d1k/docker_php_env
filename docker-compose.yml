@@ -12,16 +12,13 @@ services:
     links:
       - postgresql
       - gearmand
-    networks:
-      - db_network
+      - sphinx
   postgresql:
     image: mkurnikov/postgresql-9.4
     volumes:
       - '/home/eduard/Project/postgres_data:/var/lib/postgresql/data'
     environment:
       - POSTGRES_PASSWORD=123qwe
-    networks:
-      - db_network
     ports:
       - '5432:5432'
   gearmand:
@@ -38,8 +35,5 @@ services:
       - '/home/eduard/Project/sphinx_data:/var/lib/sphinxsearch/data'
       - '/home/eduard/Project/sphinx_conf:/etc/sphinxsearch'
     ports:
-      - '9321:9312'
-      - '9318:9306'
-networks:
-  db_network:
-    driver: bridge
+      - '9321:9321'
+      - '9318:9318'
