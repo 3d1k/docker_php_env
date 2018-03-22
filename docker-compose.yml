@@ -20,6 +20,10 @@ services:
       - '/home/eduard/Project/postgres_data:/var/lib/postgresql/data'
     environment:
       - POSTGRES_PASSWORD=123qwe
+    networks:
+      - db_network
+    ports:
+      - '5432:5432'
   gearmand:
     image: artefactual/gearmand
   ubuntu-gearman-worker-php:
@@ -30,5 +34,12 @@ services:
     image: romeoz/docker-sphinxsearch
     links:
       - postgresql
+    volumes:
+      - '/home/eduard/Project/sphinx_data:/var/lib/sphinxsearch/data'
+      - '/home/eduard/Project/sphinx_conf:/etc/sphinxsearch'
+    ports:
+      - '9321:9312'
+      - '9318:9306'
 networks:
-  db_network: null
+  db_network:
+    driver: bridge
